@@ -22,7 +22,11 @@ if ! command -v pip3 &> /dev/null; then
     echo "⚠️ pip3 missing, installing..."
     sudo apt install -y python3-pip
 fi
-pip3 install --upgrade pip gdown
+sudo apt install python3-venv -y
+python3 -m venv ~/venv
+source ~/venv/bin/activate
+pip install --upgrade pip gdown
+
 
 # 4. Install core build tools and Qt5 libraries
 echo "📦 Installing build tools and Qt5 libraries..."
