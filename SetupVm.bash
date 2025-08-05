@@ -87,6 +87,21 @@ EOF
 
 chmod +x ~/Desktop/nekoray.desktop
 
+echo "📌 Pinning Nekobox to taskbar and enabling autostart..."
+
+# Pin cho Ubuntu GNOME
+if command -v gsettings &>/dev/null; then
+    gsettings set org.gnome.shell favorite-apps \
+    "$(gsettings get org.gnome.shell favorite-apps | sed "s/]$/, 'nekoray.desktop']/")" || true
+fi
+
+# Autostart cho cả Ubuntu & Lubuntu
+mkdir -p ~/.config/autostart
+cp ~/Desktop/nekoray.desktop ~/.config/autostart/nekoray.desktop
+
+echo "✅ Nekobox pinned to taskbar (Ubuntu GNOME) and set to autostart."
+
+
 # 11. Launch Nekobox
 echo "🚀 Launching Nekobox..."
 ./nekobox || echo "⚠️ Unable to launch Nekobox automatically. Start manually from ~/Downloads/nekoray."
