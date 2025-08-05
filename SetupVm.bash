@@ -93,3 +93,48 @@ echo "🚀 Launching Nekobox..."
 
 echo "✅ Setup completed successfully!"
 
+
+echo ""
+echo "🔍 Running post-setup checks..."
+
+# 1. Kiểm tra gói APT
+echo "📦 Checking APT packages..."
+for pkg in open-vm-tools open-vm-tools-desktop python3-pip unzip build-essential qtbase5-dev; do
+    if dpkg -l | grep -q "^ii\s*$pkg"; then
+        echo "✅ $pkg installed"
+    else
+        echo "❌ $pkg missing"
+    fi
+done
+
+# 2. Kiểm tra Python và pip
+echo "🐍 Python & pip:"
+python3 --version
+pip3 --version
+
+# 3. Kiểm tra gdown
+echo "⬇️ Checking gdown..."
+if python3 -m pip show gdown >/dev/null 2>&1; then
+    echo "✅ gdown installed"
+else
+    echo "❌ gdown missing"
+fi
+
+# 4. Kiểm tra thư mục Nekoray
+echo "📂 Checking Nekoray folder..."
+if [ -d "$HOME/Downloads/nekoray" ]; then
+    echo "✅ Nekoray folder exists"
+else
+    echo "❌ Nekoray folder missing"
+fi
+
+# 5. Kiểm tra shortcut Desktop
+echo "🖥️ Checking Desktop shortcut..."
+if [ -f "$HOME/Desktop/nekoray.desktop" ]; then
+    echo "✅ Desktop shortcut exists"
+else
+    echo "❌ Desktop shortcut missing"
+fi
+
+echo "🔎 Post-setup check completed!"
+
