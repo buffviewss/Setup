@@ -106,6 +106,7 @@ fi
 # Autostart cho cả Ubuntu & Lubuntu
 mkdir -p ~/.config/autostart
 cp ~/Desktop/nekoray.desktop ~/.config/autostart/nekoray.desktop
+chmod +x ~/.config/autostart/nekoray.desktop
 
 echo "✅ Nekobox pinned to taskbar (Ubuntu GNOME) and set to autostart."
 
