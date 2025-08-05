@@ -95,12 +95,12 @@ if echo "$XDG_CURRENT_DESKTOP" | grep -qi "GNOME"; then
     echo "📌 Ubuntu GNOME detected - pinning Nekobox to taskbar..."
     gsettings set org.gnome.shell favorite-apps \
     "$(gsettings get org.gnome.shell favorite-apps | sed "s/]$/, 'nekoray.desktop']/")" || true
-
 elif echo "$XDG_CURRENT_DESKTOP" | grep -qi "LXQt"; then
-    echo "📌 Lubuntu (LXQt) detected - LXQt panel doesn't support auto-pinning. You can drag shortcut manually to the panel."
+    echo "📌 Lubuntu LXQt detected - LXQt không hỗ trợ auto pin, bạn có thể kéo shortcut vào panel thủ công."
 else
-    echo "ℹ️ Unknown desktop environment ($XDG_CURRENT_DESKTOP) - skipping auto pinning."
+    echo "ℹ️ Unknown desktop environment: $XDG_CURRENT_DESKTOP - skipping auto pinning."
 fi
+
 
 
 # Autostart cho cả Ubuntu & Lubuntu
