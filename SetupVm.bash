@@ -90,10 +90,18 @@ chmod +x ~/Desktop/nekoray.desktop
 echo "📌 Pinning Nekobox to taskbar and enabling autostart..."
 
 # Pin cho Ubuntu GNOME
-if command -v gsettings &>/dev/null; then
+# Pin vào taskbar theo môi trường Desktop
+if echo "$XDG_CURRENT_DESKTOP" | grep -qi "GNOME"; then
+    echo "📌 Ubuntu GNOME detected - pinning Nekobox to taskbar..."
     gsettings set org.gnome.shell favorite-apps \
     "$(gsettings get org.gnome.shell favorite-apps | sed "s/]$/, 'nekoray.desktop']/")" || true
+
+elif echo "$XDG_CURRENT_DESKTOP" | grep -qi "LXQt"; then
+    echo "📌 Lubuntu (LXQt) detected - LXQt panel doesn't support auto-pinning. You can drag shortcut manually to the panel."
+else
+    echo "ℹ️ Unknown desktop environment ($XDG_CURRENT_DESKTOP) - skipping auto pinning."
 fi
+
 
 # Autostart cho cả Ubuntu & Lubuntu
 mkdir -p ~/.config/autostart
