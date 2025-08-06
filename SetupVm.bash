@@ -11,6 +11,47 @@ echo "🔄 Updating system packages..."
 sudo add-apt-repository universe -y || true
 sudo apt update && sudo apt upgrade -y
 
+# 1.1 Install Google Chrome (Ubuntu/Lubuntu 24.04 compatible)
+echo "🌐 Installing Google Chrome..."
+if ! command -v google-chrome &> /dev/null; then
+    wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome.deb
+    
+    # Cài đặt Chrome với apt để xử lý phụ thuộc
+    sudo apt install -y /tmp/google-chrome.deb || {
+        echo "⚠️ Chrome install failed. Fixing dependencies..."
+        sudo apt --fix-broken install -y
+        sudo apt install -y /tmp/google-chrome.deb
+    }
+    rm /tmp/google-chrome.deb
+    echo "✅ Google Chrome installed successfully!"
+else
+    echo "✅ Google Chrome is already installed."
+fi
+
+# 1.2 Create Google Chrome desktop shortcut
+echo "🖥️ Creating Google Chrome desktop shortcut..."
+cat <<EOF > ~/Desktop/google-chrome.desktop
+[Desktop Entry]
+Version=1.0
+Name=Google Chrome
+Comment=Browse the web
+Exec=/usr/bin/google-chrome-stable
+Icon=/usr/share/icons/hicolor/128x128/apps/google-chrome.png
+Terminal=false
+Type=Application
+Categories=Network;WebBrowser;
+EOF
+
+chmod +x ~/Desktop/google-chrome.desktop
+
+# 1.3 Autostart Google Chrome (optional)
+mkdir -p ~/.config/autostart
+cp ~/Desktop/google-chrome.desktop ~/.config/autostart/google-chrome.desktop
+chmod +x ~/.config/autostart/google-chrome.desktop
+
+echo "✅ Google Chrome shortcut created and added to autostart."
+
+
 # 2. Install Open VM Tools
 echo "📦 Installing Open VM Tools..."
 sudo apt install -y open-vm-tools open-vm-tools-desktop || echo "⚠️ Warning: Open VM Tools not found for this Ubuntu version."
