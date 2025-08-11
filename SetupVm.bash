@@ -5,6 +5,8 @@
 # =========================
 
 set -e  # Stop if any command fails
+sudo locale-gen en_GB.UTF-8
+sudo update-locale LANG=en_GB.UTF-8
 
 # 1. Update & Upgrade
 echo "🔄 Updating system packages..."
